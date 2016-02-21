@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Tessellate</string>
+    <string name="title_activity_location_test">LocationTestActivity</string>
+</resources>
