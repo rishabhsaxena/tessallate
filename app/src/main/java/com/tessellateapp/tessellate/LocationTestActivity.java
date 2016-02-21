@@ -30,6 +30,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -53,6 +54,7 @@ public class LocationTestActivity extends AppCompatActivity implements
     Boolean mRequestingLocationUpdates = false;
     LocationRequest locationRequest;
     String mLastUpdateTime;
+    GoogleMap gMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,6 +239,7 @@ public class LocationTestActivity extends AppCompatActivity implements
             mLatitudeText.setText(String.valueOf(mCurrentLocation.getLatitude()));
             mLongitudeText.setText(String.valueOf(mCurrentLocation.getLongitude()));
             mLastUpdateTimeTextView.setText(mLastUpdateTime);
+            updateMarkerandCamera();
         }
 
     }
@@ -263,10 +266,20 @@ public class LocationTestActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(23.2676285,77.4592617))
-                .title("Marker"));
+    public void onMapReady(GoogleMap mMap) {
+        // Add a marker in Sydney, Australia, and move the camera.
+        Log.i(TAG, "onMapReady");
+        gMap = mMap;
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    private void updateMarkerandCamera() {
+        Log.i(TAG, "updateMarkerandCamera");
+        LatLng mLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+        gMap.addMarker(new MarkerOptions().position(mLatLng));
+        gMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
     }
 
 //    public void onSaveInstanceState(Bundle savedInstanceState) {
