@@ -41,7 +41,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 public class LocationTestActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback,LocationService.Callbacks {
 
     //GoogleMap map;
     private static final String TAG = "LocationTestActivity";
@@ -280,6 +280,11 @@ public class LocationTestActivity extends AppCompatActivity implements
         LatLng mLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
         gMap.addMarker(new MarkerOptions().position(mLatLng));
         gMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
+    }
+
+    @Override
+    public void updateClient(long data) {
+        
     }
 
 //    public void onSaveInstanceState(Bundle savedInstanceState) {
